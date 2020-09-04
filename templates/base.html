@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Edge Check In</title>
+</head>
+
+<body>
+	<h1>
+	    <img src="https://edgehobokenstaticassets.s3.us-east-1.amazonaws.com/images/NYCRTCLOGO.jpg" width="100px" height="100px">
+            {% block title %}This is the edge symptom checker site{% endblock %}
+	</h1>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

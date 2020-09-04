@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}NYC RTC Check-in{% endblock %}
+
+{% block content %}
+
+<form name="symptomForm" action="/symptom_check/submit" onSubmit="return checkForm()" method="post">
+  <div class="form-group">
+    <label class="question" for="athlete">Athlete Name:</label>
+    <select id="athlete" name="athlete" class="form-control form-control name-box">
+      <option value="null">Select Athlete</option>
+      {% for user in users %}
+      <option value={{ user }}>{{ user }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="country-question">Have you traveled outside of the Country in the last 14 days?</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="countryRadios" id="countryRadios1" value="yes">
+      <label class="form-check-label" for="countryRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="countryRadios" id="countryRadios2" value="no">
+      <label class="form-check-label" for="countryRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="tristate-question">Have you traveled outside of the tristate(PA,NJ,NY) in the last 14 days?</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="tristateRadios" id="tristateRadios1" value="yes">
+      <label class="form-check-label" for="tristateRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="tristateRadios" id="tristateRadios2" value="no">
+      <label class="form-check-label" for="tristateRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="contact-question">Have you come in contact with anyone diagnosed with or suspected of being infected with COVID-19 within the last 14 days?</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="contactRadios" id="contactRadios1" value="yes">
+      <label class="form-check-label" for="contactRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="contactRadios" id="contactRadios2" value="no">
+      <label class="form-check-label" for="contactRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="symptoms-question">Are you experiencing any coughing, shortness of breath, or trouble breathing?</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="symptomsRadios" id="symptomsRadios1" value="yes">
+      <label class="form-check-label" for="symptomsRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="symptomsRadios" id="symptomsRadios2" value="no">
+      <label class="form-check-label" for="symptomsRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="taste-question">Are you experiencing a loss of taste and/or smell?</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="tasteRadios" id="tasteRadios1" value="yes">
+      <label class="form-check-label" for="tasteRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="tasteRadios" id="tasteRadios2" value="no">
+      <label class="form-check-label" for="tasteRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="question-wrap">
+    <div class="question" id="headaches-question">Are you experiencing any fevers, headaches, muscle pains, chills, or repeated shaking with chills??</div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="headacheRadios" id="headachesRadios1" value="yes">
+      <label class="form-check-label" for="headachesRadios1">
+        Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="headacheRadios" id="headachesRadios2" value="no">
+      <label class="form-check-label" for="headachesRadios2">
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="signature">
+    <div class="form-group">
+      <label class="question" for="exampleFormControlTextarea1">By typing your name below you are verifying that the above information is accurate.  Additionally, you are acknowledging the risk associated with contracting COVID-19 through the act of Wrestling and therefore release the Edge School of Wrestling, Stevens Institute of Technology, Columbia University, and the NYCRTC from any liability</label>
+      <div class="row">
+	<div class="col-sm-1"></div>
+        <div class="col-sm-4"><input id="signature" name="signature" class="form-control" type="text" placeholder="Signature"></div>
+	<div class="col-sm-2"></div>
+	<div class="col-sm-1">Date: </div>
+	<div class="col-sm-2"><input id="day" name="day" class="form-control" type="text" placeholder={{ day }}></div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" value="Submit" style="margin-left: 50%;" class="btn btn-default btn-primary">Submit</button>
+
+{% csrf_token %}
+</form>
+
+<script>
+function checkForm() {
+    var athlete = document.forms["symptomForm"]["athlete"].value;
+    var country = document.forms["symptomForm"]["countryRadios"].value;
+    var tristate = document.forms["symptomForm"]["tristateRadios"].value;
+    var contact = document.forms["symptomForm"]["contactRadios"].value;
+    var symptom = document.forms["symptomForm"]["symptomsRadios"].value;
+    var taste = document.forms["symptomForm"]["tasteRadios"].value;
+    var headache = document.forms["symptomForm"]["headacheRadios"].value;
+    var signature = document.forms["symptomForm"]["signature"].value;
+    var day = document.forms["symptomForm"]["day"].value;
+
+    console.log(signature);
+    console.log(day);
+
+    if (athlete == "null") {
+        alert('Must pick an athlete to submit for');
+        return false;
+    }
+    if (country == "" || tristate == "" || contact == "" || symptom == "" || taste == "" || headache == "") {
+        alert('Must specify "Yes" or "No" for every question.');
+        return false;
+    }
+    if (signature != athlete) {
+        alert('Signature must match athlete name.');
+        return false;
+    }
+    if (day == '') {
+        document.forms["symptomForm"]["day"].value = {{ day }};
+    }
+
+    return true;
+}
+</script>
+{% endblock %}
+
+
