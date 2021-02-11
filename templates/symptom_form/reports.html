@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Download Report{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+<div class="card col-sm-5">
+<div class="card-body">
+<form action="/symptom_check/get_report" class="form-inline" method="post">
+  <div class="form-group">
+    <label class="question" for="date" style="padding-right: 20px;padding-bottom: 10px;">Date:</label>
+    <select id="date" name="date" class="form-control form-control name-box" style="margin-bottom: 5px;margin-right:30px;">
+      {% for day in dates %}
+      <option value={{ user_value }}>{{ day }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-2">Download</button>
+
+  {% csrf_token %}
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}
